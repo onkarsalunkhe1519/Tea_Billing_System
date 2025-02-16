@@ -1,0 +1,123 @@
+﻿@model IEnumerable<Tea_Billing_System.Models.Review>
+
+<div class="container mt-4">
+    <h2 class="text-center">Reviews for @ViewBag.TeaName</h2>
+
+    <div class="text-center mb-3">
+        <a asp-action="AddReview" asp-route-teaName="@ViewBag.TeaName" class="btn" style="background-color:#88b44e">Leave a Review</a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success text-center">@TempData["Success"]</div>
+    }
+
+    @if (!Model.Any())
+    {
+        <p class="text-center">No reviews yet. Be the first to review this tea!</p>
+    }
+    else
+    {
+        <div class="d-flex flex-wrap justify-content-center">
+            @foreach (var review in Model)
+            {
+                <div class="card shadow-sm mb-3 mx-2" style="width: 22rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@review.UserEmail</h5>
+                        <p class="card-text">
+                            <strong>Rating:</strong>
+                            <span class="text-warning">
+                                @for (int i = 0; i < review.Rating; i++)
+                                {
+                                    <i class="fas fa-star"></i>
+                                }
+                                @for (int i = review.Rating; i < 5; i++)
+                                {
+                                    <i class="far fa-star"></i>
+                                }
+                            </span>
+                        </p>
+                        <p class="card-text"><strong>Comment:</strong> @review.Comment</p>
+                        <p class="text-muted">Reviewed on @review.ReviewDate.ToShortDateString()</p>
+
+                        @if (Context.Session.GetString("UserRole") == "Admin")
+                        {
+                            <a asp-action="DeleteReview" asp-route-id="@review.Id" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<!-- Add FontAwesome for star icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model IEnumerable<Tea_Billing_System.Models.Review>
+
+<h2>Reviews for @ViewBag.TeaName</h2>
+
+<a asp-action="AddReview" asp-route-teaName="@ViewBag.TeaName" class="btn btn-primary">Leave a Review</a>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (!Model.Any())
+{
+    <p>No reviews yet. Be the first to review this tea!</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>Date</th>
+                @if (Context.Session.GetString("UserRole") == "Admin")
+                {
+                    <th>Actions</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var review in Model)
+            {
+                <tr>
+                    <td>@review.UserEmail</td>
+                    <td>@review.Rating ⭐</td>
+                    <td>@review.Comment</td>
+                    <td>@review.ReviewDate.ToShortDateString()</td>
+                    @if (Context.Session.GetString("UserRole") == "Admin")
+                    {
+                        <td>
+                            <a asp-action="DeleteReview" asp-route-id="@review.Id" class="btn btn-danger">Delete</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+ *@

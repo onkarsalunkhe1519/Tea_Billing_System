@@ -1,0 +1,242 @@
+﻿@{
+    var userRole = Context.Session.GetString("UserRole");
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Tea_Billing_System</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Tea_Billing_System.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+</head>
+
+<body style="background-color:#effae8;">
+    @if (!(currentController == "Account" && (currentAction == "Login" || currentAction == "Register" || currentAction == "Account"))
+    && !(currentController == "Account" && currentAction == "Index"))
+    {
+       @*  <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                   
+					<img src="~/img/logo.png" style="height:70px; width=70px;"/>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            @if (userRole == "Admin")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link " href="@Url.Action("Dashboard", "Admin")">DashBoard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Orders", "Admin")">All Orders</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Product" asp-action="Index">Manage Products</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Admin" asp-action="AllReviews">Manage Reviews</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link btn btn-danger text-dark" href="@Url.Action("Logout", "Account")">Logout</a>
+                                </li>
+                            }
+                            else if (userRole == "User")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Order" asp-action="CreateOrder">Order Tea</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Order" asp-action="UserOrders">My Orders</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link btn btn-danger text-dark" href="@Url.Action("Logout", "Account")">Logout</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header> *@
+
+
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #88b44e;">
+                <div class="container-fluid">
+                    <!-- Logo on the left -->
+                    <a class="navbar-brand" href="#">
+                        <img src="~/img/logo.png" style="height:60px; width:70px;" />
+                    </a>
+
+                    <!-- Toggle button for small screens -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Navbar links on the right -->
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                        <ul class="navbar-nav">
+                            @if (userRole == "Admin")
+                            {
+                                <li class="nav-item me-3">
+                                    <a class="nav-link text-dark" href="@Url.Action("Dashboard", "Admin")">DashBoard</a>
+                                </li>
+                                <li class="nav-item me-3">
+                                    <a class="nav-link text-dark" href="@Url.Action("Orders", "Admin")">Orders List</a>
+                                </li>
+                                <li class="nav-item me-3">
+                                    <a class="nav-link text-dark" asp-controller="Product" asp-action="Index">Manage Products</a>
+                                </li>
+                                <li class="nav-item me-3">
+                                    <a class="nav-link text-dark" asp-controller="Admin" asp-action="AllReviews">Manage Reviews</a>
+                                </li>
+                                <li class="nav-item me-3">
+                                    <a class="btn btn-danger text-dark" href="@Url.Action("Logout", "Account")">Logout</a>
+                                </li>
+                            }
+                            else if (userRole == "User")
+                            {
+                                <li class="nav-item me-3">
+                                    <a class="nav-link  text-dark" asp-controller="Order" asp-action="CreateOrder">Order Tea</a>
+                                </li>
+                                <li class="nav-item me-3">
+                                    <a class="nav-link  text-dark" asp-controller="Order" asp-action="UserOrders">My Orders</a>
+                                </li>
+                                <li class="nav-item me-3">
+                                    <a class="btn btn-danger text-dark" href="@Url.Action("Logout", "Account")">Logout</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+
+
+
+    }
+
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    @* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Tea_Billing_System</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Tea_Billing_System.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+@{
+    var userRole = Context.Session.GetString("UserRole");
+}
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Tea_Billing_System</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (userRole == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Dashboard", "Admin")">DashBoard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Orders", "Admin")">All Orders</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Product" asp-action="Index">Manage Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Admin" asp-action="AllReviews">Manage Reviews</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-danger text-dark" href="@Url.Action("Logout", "Account")">Logout</a>
+                            </li>
+                        }
+                        else if (userRole == "User")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Order" asp-action="CreateOrder">Order Tea</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Order" asp-action="UserOrders">My Orders</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-danger text-dark" href="@Url.Action("Logout", "Account")">Logout</a>
+                            </li>
+                        }
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+ *@

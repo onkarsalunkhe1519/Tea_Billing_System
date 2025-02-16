@@ -1,0 +1,118 @@
+﻿@model IEnumerable<Tea_Billing_System.Models.Product>
+
+<h2 class="text-center mb-4">Order Your Favorite Tea</h2>
+
+<!-- Success & Error Messages -->
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger text-center">@TempData["Error"]</div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success text-center">@TempData["Success"]</div>
+}
+
+<!-- Tea Product Cards -->
+<div class="row justify-content-center">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card shadow-sm border-0 rounded-4 text-center">
+                <!-- Centered Image -->
+                <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
+                    <img src="@item.ImageUrl" class="rounded-top" style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="@item.Name">
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title text-truncate">@item.Name</h5>
+                    <p class="card-text m-0"><b>Price:</b> ₹@item.Price</p>
+                    <p class="card-text"><b>Stock:</b> @item.Stock</p>
+
+                    <!-- View Reviews -->
+                    <a asp-action="ProductReviews" asp-controller="Review" asp-route-teaName="@item.Name"
+                       class="btn btn-info btn-sm rounded-pill w-100">View Reviews</a>
+
+                    @if (item.Stock > 0)
+                    {
+                        <!-- Buy Now Form -->
+                        <form asp-action="InitiatePayment" method="post" class="mt-2">
+                            <input type="hidden" name="teaName" value="@item.Name">
+                            <div class="form-group">
+                                <input type="number" name="quantity" class="form-control form-control-sm text-center"
+                                        min="1" max="@item.Stock" placeholder="Qty">
+                            </div>
+                            <button type="submit" class="btn btn-sm w-100 mt-2 rounded-pill" style="background-color:#88b44e; color: white;">
+                                Buy Now
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button class="btn btn-danger btn-sm w-100 mt-2 rounded-pill" disabled>Out of Stock</button>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model IEnumerable<Tea_Billing_System.Models.Product>
+
+
+<h2 class="text-center">Order Your Favorite Tea</h2>
+
+@if (TempData["Error"] != null)
+{
+        <div class="alert alert-danger">@TempData["Error"]</div>
+}
+@if (TempData["Success"] != null)
+{
+        <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img src="@item.ImageUrl" class="card-img-top" style="height: 200px; object-fit: cover;" alt="@item.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">Price: ₹@item.Price</p>
+                        <p class="card-text">Stock: @item.Stock</p>
+                        <p class="card-text">Price: ₹@item.Price</p>
+
+                        <a asp-action="ProductReviews" asp-controller="Review" asp-route-teaName="@item.Name" class="btn btn-info">View Reviews</a>
+
+                    @if (item.Stock > 0)
+                    {
+                                <form asp-action="InitiatePayment" method="post">
+                                    <input type="hidden" name="teaName" value="@item.Name">
+                                    <div class="form-group">
+                                        <label>Quantity:</label>
+                                        <input type="number" name="quantity" class="form-control" value="1" min="1" max="@item.Stock">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-2">Buy Now</button>
+                                </form>
+                    }
+                    else
+                    {
+                                <button class="btn btn-danger" disabled>Out of Stock</button>
+                    }
+                    </div>
+                </div>
+            </div>
+    }
+</div>
+ *@

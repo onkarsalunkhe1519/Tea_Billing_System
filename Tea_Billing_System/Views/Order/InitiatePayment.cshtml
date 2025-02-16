@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Confirm Payment";
+}
+
+<div class="container d-flex justify-content-center align-items-center " style="min-height: 100vh; margin-top:-50px">
+    <div class="card shadow-sm p-4" style="max-width: 400px; width: 100%;">
+        <div class="card-body">
+            <h2 class="text-center mb-4">Confirm Your Payment</h2>
+
+            <!-- Payment Amount -->
+            <div class="text-center mb-4">
+                <h4>Amount to be Paid:</h4>
+                <p class="display-4 text-success">₹@ViewBag.Amount</p>
+            </div>
+
+            <!-- Razorpay Payment Button -->
+            <p class="text-center mb-4">Pay securely using Razorpay to complete your order.</p>
+
+            <div class="d-flex justify-content-center">
+                <form action="/Order/PaymentSuccess" method="POST">
+                    <script src="https://checkout.razorpay.com/v1/checkout.js"
+                            data-key="rzp_test_Kl7588Yie2yJTV"
+                            data-amount="@((int)(ViewBag.Amount * 100))"
+                            data-currency="INR"
+                            data-order_id="@ViewBag.OrderId"
+                            data-buttontext="Pay using Razorpay"
+                            data-name="Tea-Shopping"
+                            data-description="Printing Order Payment"
+                            data-theme.color="#3399cc">
+                    </script>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+@* <h2>Confirm Payment</h2>
+<p>Amount: ₹@ViewBag.Amount</p>
+
+<form action="/Order/PaymentSuccess" method="POST">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"
+            data-key="rzp_test_Kl7588Yie2yJTV"
+            data-amount="@((int)(ViewBag.Amount * 100))"
+            data-currency="INR"
+            data-order_id="@ViewBag.OrderId"
+            data-buttontext="Pay Now"
+            data-name="FlexPrinting Management"
+            data-description="Printing Order Payment"
+            data-theme.color="#3399cc">
+    </script>
+</form>
+ *@

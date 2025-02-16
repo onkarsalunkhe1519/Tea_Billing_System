@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Tea_Billing_System.props" />
+</Project>
